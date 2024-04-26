@@ -44,12 +44,12 @@ class CommonMppLibPlugin : Plugin<Project> {
                         }
                     }
                 }
-
-                @OptIn(ExperimentalWasmDsl::class)
-                wasmJs {
-                    browser()
-                    binaries.executable()
-                }
+// waiting for wasm support in kotlinx resource https://github.com/goncalossilva/kotlinx-resources/issues/91
+//                @OptIn(ExperimentalWasmDsl::class)
+//                wasmJs {
+//                    browser()
+//                    binaries.executable()
+//                }
                 androidTarget {
                     publishLibraryVariants("release")
                     compilations.all {

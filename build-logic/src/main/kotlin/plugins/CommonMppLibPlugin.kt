@@ -6,6 +6,8 @@ import org.gradle.api.*
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsSubTargetDsl
+import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
 class CommonMppLibPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -32,24 +34,18 @@ class CommonMppLibPlugin : Plugin<Project> {
                     HostOs.WINDOWS -> mingwX64("native")
                 }
                 jvm()
-                js().apply {
-                    compilations.apply {
-                        nodejs()
-                        browser {
-                            testTask {
-                                useKarma {
-                                    useChromeHeadless()
-                                }
-                            }
-                        }
-                    }
+                js {
+                    configureTargetsForJS()
                 }
-
-                @OptIn(ExperimentalWasmDsl::class)
-                wasmJs {
-                    browser()
-                    binaries.executable()
-                }
+// waiting for wasm support in kotlinx resource https://github.com/goncalossilva/kotlinx-resources/issues/91
+//                @OptIn(ExperimentalWasmDsl::class)
+//                wasmJs {
+//                    configureTargetsForJS()
+//                }
+//                @OptIn(ExperimentalWasmDsl::class)
+//                wasmWasi {
+//                    nodejs()
+//                }
                 androidTarget {
                     publishLibraryVariants("release")
                     compilations.all {
@@ -88,5 +84,23 @@ class CommonMppLibPlugin : Plugin<Project> {
             target.startsWith("Mac") -> HostOs.MAC
             else -> throw GradleException("Unknown OS: $target")
         }
+    }
+
+    private fun KotlinJsSubTargetDsl.configureMochaTimeout() {
+        testTask {
+            useMocha {
+                timeout = "20s"
+            }
+        }
+    }
+
+    private fun KotlinJsTargetDsl.configureTargetsForJS() {
+        browser {
+            configureMochaTimeout()
+        }
+        nodejs {
+            configureMochaTimeout()
+        }
+        binaries.executable()
     }
 }

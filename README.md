@@ -1,7 +1,7 @@
-# KOTLIN BECH32
+# KOTLIN ed25519
 
-[![GitHub release](https://img.shields.io/badge/release-v0.0.1-blue.svg)](https://github.com/KryptonReborn/kotlin-bech32/releases/tag/v0.0.1) [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.23-B125EA?logo=kotlin)](https://kotlinlang.org)
-[![Build Status](https://github.com/saschpe/kase64/workflows/Main/badge.svg)](https://github.com/KryptonReborn/kotlin-bech32/actions)
+[![GitHub release](https://img.shields.io/badge/release-v0.0.1-blue.svg)](https://github.com/KryptonReborn/kotlin-ed25519/releases/tag/v0.0.1) [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.23-B125EA?logo=kotlin)](https://kotlinlang.org)
+[![Build Status](https://github.com/saschpe/kase64/workflows/Main/badge.svg)](https://github.com/KryptonReborn/kotlin-ed25519/actions)
 [![License](http://img.shields.io/:License-Apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ![badge-android](http://img.shields.io/badge/Platform-Android-brightgreen.svg?logo=android)
@@ -29,7 +29,7 @@ Add the following repository to your settings.gradle.kts file
 ```kotlin
 repositories {
     maven {
-        url = uri("https://maven.pkg.github.com/KryptonReborn/kotlin-bech32")
+        url = uri("https://maven.pkg.github.com/KryptonReborn/kotlin-ed25519")
         credentials {
             username = "user name"
             password = "personal access token"
@@ -42,7 +42,7 @@ Add the following dependency to your build.gradle.kts file
 
 ```build.gradle.kts
 dependencies {
-    implementation("kotlin-bech32:[library name]:[library version]")
+    implementation("kotlin-ed25519:[library name]:[library version]")
 }
 ```
 

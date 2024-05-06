@@ -98,6 +98,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: ${{ steps.changelog.outputs.changelog }}
             
-            For more details see [CHANGELOG.md](https://github.com/KryptonReborn/kotlin-bech32/blob/main/CHANGELOG.md).
+            For more details see [CHANGELOG.md](https://github.com/KryptonReborn/kotlin-ed25519/blob/main/CHANGELOG.md).
           draft: false
           prerelease: false

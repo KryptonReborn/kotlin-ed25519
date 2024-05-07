@@ -42,10 +42,12 @@ Add the following dependency to your build.gradle.kts file
 
 ```build.gradle.kts
 dependencies {
-    implementation("kotlin-ed25519:[library name]:[library version]")
+    implementation("dev.kryptonreborn.ed25519:ed25519:[version]")
 }
 ```
 
 ## Acknowledgements
 
-This library is inspired by [subtle](https://github.com/cashapp/zipline/tree/trunk/zipline-loader/src/commonMain/kotlin/app/cash/zipline/loader/internal/tink/subtle) by [cashapp](https://github.com/cashapp).
+This library is inspired
+by [subtle](https://github.com/cashapp/zipline/tree/trunk/zipline-loader/src/commonMain/kotlin/app/cash/zipline/loader/internal/tink/subtle)
+by [cashapp](https://github.com/cashapp).

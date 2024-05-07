@@ -11,8 +11,8 @@ plugins {
 
 publishConfig {
     url = "https://maven.pkg.github.com/KryptonReborn/kotlin-ed25519"
-    groupId = "kotlin-ed25519"
-    artifactId = "library"
+    groupId = "kryptonreborn"
+    artifactId = "ed25519"
 }
 
 version = "0.0.1"

@@ -16,7 +16,7 @@
 
 [//]: # (![badge-watchos]&#40;http://img.shields.io/badge/Platform-watchOS-orange.svg?logo=apple&#41;)
 
-This is the template for initializing a repo based on Kotlin Multiplarform
+Kotlin implementation of group operations on Curve25519.
 
 ## Download
 
@@ -48,4 +48,4 @@ dependencies {
 
 ## Acknowledgements
 
-This library is inspired by [repo](url) by [user](url).
+This library is inspired by [subtle](https://github.com/cashapp/zipline/tree/trunk/zipline-loader/src/commonMain/kotlin/app/cash/zipline/loader/internal/tink/subtle) by [cashapp](https://github.com/cashapp).

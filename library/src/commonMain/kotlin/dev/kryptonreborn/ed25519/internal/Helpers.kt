@@ -12,7 +12,10 @@ internal fun getLsb(inLongArray: LongArray): Int {
 /**
  * Computes [inLongArray]^(2^252-3) mod 2^255-19 and puts the result in [out].
  */
-internal fun pow2252m3(out: LongArray, inLongArray: LongArray) {
+internal fun pow2252m3(
+    out: LongArray,
+    inLongArray: LongArray,
+) {
     val t0 = LongArray(Field25519.LIMB_CNT)
     val t1 = LongArray(Field25519.LIMB_CNT)
     val t2 = LongArray(Field25519.LIMB_CNT)
@@ -132,7 +135,10 @@ internal fun isNonZeroVarTime(in1: LongArray): Boolean {
 /**
  * Negates all values in [in1] and store it in [out].
  */
-internal fun neg(out: LongArray, in1: LongArray) {
+internal fun neg(
+    out: LongArray,
+    in1: LongArray,
+) {
     for (i in in1.indices) {
         out[i] = -in1[i]
     }

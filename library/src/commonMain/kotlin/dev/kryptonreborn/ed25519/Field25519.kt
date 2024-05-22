@@ -49,7 +49,11 @@ object Field25519 {
      *
      * On entry: in1, in2 are in reduced-size form.
      */
-    fun sum(output: LongArray, in1: LongArray, in2: LongArray) {
+    fun sum(
+        output: LongArray,
+        in1: LongArray,
+        in2: LongArray,
+    ) {
         for (i in 0 until LIMB_CNT) {
             output[i] = in1[i] + in2[i]
         }
@@ -60,7 +64,10 @@ object Field25519 {
      *
      * On entry: in is in reduced-size form.
      */
-    fun sum(output: LongArray, in1: LongArray) {
+    fun sum(
+        output: LongArray,
+        in1: LongArray,
+    ) {
         sum(output, output, in1)
     }
 
@@ -70,7 +77,11 @@ object Field25519 {
      *
      * On entry: in1, in2 are in reduced-size form.
      */
-    fun sub(output: LongArray, in1: LongArray, in2: LongArray) {
+    fun sub(
+        output: LongArray,
+        in1: LongArray,
+        in2: LongArray,
+    ) {
         for (i in 0 until LIMB_CNT) {
             output[i] = in1[i] - in2[i]
         }
@@ -79,7 +90,11 @@ object Field25519 {
     /**
      * Multiply a number by a scalar: output = in * scalar
      */
-    fun scalarProduct(output: LongArray, inLongArray: LongArray, scalar: Long) {
+    fun scalarProduct(
+        output: LongArray,
+        inLongArray: LongArray,
+        scalar: Long,
+    ) {
         for (i in 0 until LIMB_CNT) {
             output[i] = inLongArray[i] * scalar
         }
@@ -93,130 +108,134 @@ object Field25519 {
      *
      * out[x] <= 14 * the largest product of the input limbs.
      */
-    fun product(out: LongArray, in2: LongArray, in1: LongArray) {
+    fun product(
+        out: LongArray,
+        in2: LongArray,
+        in1: LongArray,
+    ) {
         out[0] = (in2[0] * in1[0])
         out[1] = (
-                (
-                        in2[0] * in1[1] +
-                                in2[1] * in1[0]
-                        )
-                )
+            (
+                in2[0] * in1[1] +
+                    in2[1] * in1[0]
+            )
+        )
         out[2] = (
-                2 * in2[1] * in1[1] +
-                        in2[0] * in1[2] +
-                        in2[2] * in1[0]
-                )
+            2 * in2[1] * in1[1] +
+                in2[0] * in1[2] +
+                in2[2] * in1[0]
+        )
         out[3] = (
-                in2[1] * in1[2] +
-                        in2[2] * in1[1] +
-                        in2[0] * in1[3] +
-                        in2[3] * in1[0]
-                )
+            in2[1] * in1[2] +
+                in2[2] * in1[1] +
+                in2[0] * in1[3] +
+                in2[3] * in1[0]
+        )
         out[4] = (
-                in2[2] * in1[2] +
-                        2 * (in2[1] * in1[3] + in2[3] * in1[1]) +
-                        in2[0] * in1[4] +
-                        in2[4] * in1[0]
-                )
+            in2[2] * in1[2] +
+                2 * (in2[1] * in1[3] + in2[3] * in1[1]) +
+                in2[0] * in1[4] +
+                in2[4] * in1[0]
+        )
         out[5] = (
-                in2[2] * in1[3] +
-                        in2[3] * in1[2] +
-                        in2[1] * in1[4] +
-                        in2[4] * in1[1] +
-                        in2[0] * in1[5] +
-                        in2[5] * in1[0]
-                )
+            in2[2] * in1[3] +
+                in2[3] * in1[2] +
+                in2[1] * in1[4] +
+                in2[4] * in1[1] +
+                in2[0] * in1[5] +
+                in2[5] * in1[0]
+        )
         out[6] = (
-                2 * (in2[3] * in1[3] + in2[1] * in1[5] + in2[5] * in1[1]) +
-                        in2[2] * in1[4] +
-                        in2[4] * in1[2] +
-                        in2[0] * in1[6] +
-                        in2[6] * in1[0]
-                )
+            2 * (in2[3] * in1[3] + in2[1] * in1[5] + in2[5] * in1[1]) +
+                in2[2] * in1[4] +
+                in2[4] * in1[2] +
+                in2[0] * in1[6] +
+                in2[6] * in1[0]
+        )
         out[7] = (
-                in2[3] * in1[4] +
-                        in2[4] * in1[3] +
-                        in2[2] * in1[5] +
-                        in2[5] * in1[2] +
-                        in2[1] * in1[6] +
-                        in2[6] * in1[1] +
-                        in2[0] * in1[7] +
-                        in2[7] * in1[0]
-                )
+            in2[3] * in1[4] +
+                in2[4] * in1[3] +
+                in2[2] * in1[5] +
+                in2[5] * in1[2] +
+                in2[1] * in1[6] +
+                in2[6] * in1[1] +
+                in2[0] * in1[7] +
+                in2[7] * in1[0]
+        )
         out[8] = (
-                in2[4] * in1[4] +
-                        2 * (in2[3] * in1[5] + in2[5] * in1[3] + in2[1] * in1[7] + in2[7] * in1[1]) +
-                        in2[2] * in1[6] +
-                        in2[6] * in1[2] +
-                        in2[0] * in1[8] +
-                        in2[8] * in1[0]
-                )
+            in2[4] * in1[4] +
+                2 * (in2[3] * in1[5] + in2[5] * in1[3] + in2[1] * in1[7] + in2[7] * in1[1]) +
+                in2[2] * in1[6] +
+                in2[6] * in1[2] +
+                in2[0] * in1[8] +
+                in2[8] * in1[0]
+        )
         out[9] = (
-                in2[4] * in1[5] +
-                        in2[5] * in1[4] +
-                        in2[3] * in1[6] +
-                        in2[6] * in1[3] +
-                        in2[2] * in1[7] +
-                        in2[7] * in1[2] +
-                        in2[1] * in1[8] +
-                        in2[8] * in1[1] +
-                        in2[0] * in1[9] +
-                        in2[9] * in1[0]
-                )
+            in2[4] * in1[5] +
+                in2[5] * in1[4] +
+                in2[3] * in1[6] +
+                in2[6] * in1[3] +
+                in2[2] * in1[7] +
+                in2[7] * in1[2] +
+                in2[1] * in1[8] +
+                in2[8] * in1[1] +
+                in2[0] * in1[9] +
+                in2[9] * in1[0]
+        )
         out[10] = (
-                2 * (in2[5] * in1[5] + in2[3] * in1[7] + in2[7] * in1[3] + in2[1] * in1[9] + in2[9] * in1[1]) +
-                        in2[4] * in1[6] +
-                        in2[6] * in1[4] +
-                        in2[2] * in1[8] +
-                        in2[8] * in1[2]
-                )
+            2 * (in2[5] * in1[5] + in2[3] * in1[7] + in2[7] * in1[3] + in2[1] * in1[9] + in2[9] * in1[1]) +
+                in2[4] * in1[6] +
+                in2[6] * in1[4] +
+                in2[2] * in1[8] +
+                in2[8] * in1[2]
+        )
         out[11] = (
-                in2[5] * in1[6] +
-                        in2[6] * in1[5] +
-                        in2[4] * in1[7] +
-                        in2[7] * in1[4] +
-                        in2[3] * in1[8] +
-                        in2[8] * in1[3] +
-                        in2[2] * in1[9] +
-                        in2[9] * in1[2]
-                )
+            in2[5] * in1[6] +
+                in2[6] * in1[5] +
+                in2[4] * in1[7] +
+                in2[7] * in1[4] +
+                in2[3] * in1[8] +
+                in2[8] * in1[3] +
+                in2[2] * in1[9] +
+                in2[9] * in1[2]
+        )
         out[12] = (
-                in2[6] * in1[6] +
-                        2 * (in2[5] * in1[7] + in2[7] * in1[5] + in2[3] * in1[9] + in2[9] * in1[3]) +
-                        in2[4] * in1[8] +
-                        in2[8] * in1[4]
-                )
+            in2[6] * in1[6] +
+                2 * (in2[5] * in1[7] + in2[7] * in1[5] + in2[3] * in1[9] + in2[9] * in1[3]) +
+                in2[4] * in1[8] +
+                in2[8] * in1[4]
+        )
         out[13] = (
-                in2[6] * in1[7] +
-                        in2[7] * in1[6] +
-                        in2[5] * in1[8] +
-                        in2[8] * in1[5] +
-                        in2[4] * in1[9] +
-                        in2[9] * in1[4]
-                )
+            in2[6] * in1[7] +
+                in2[7] * in1[6] +
+                in2[5] * in1[8] +
+                in2[8] * in1[5] +
+                in2[4] * in1[9] +
+                in2[9] * in1[4]
+        )
         out[14] = (
-                2 * (in2[7] * in1[7] + in2[5] * in1[9] + in2[9] * in1[5]) +
-                        in2[6] * in1[8] +
-                        in2[8] * in1[6]
-                )
+            2 * (in2[7] * in1[7] + in2[5] * in1[9] + in2[9] * in1[5]) +
+                in2[6] * in1[8] +
+                in2[8] * in1[6]
+        )
         out[15] = (
-                in2[7] * in1[8] +
-                        in2[8] * in1[7] +
-                        in2[6] * in1[9] +
-                        in2[9] * in1[6]
-                )
+            in2[7] * in1[8] +
+                in2[8] * in1[7] +
+                in2[6] * in1[9] +
+                in2[9] * in1[6]
+        )
         out[16] = (
-                (
-                        in2[8] * in1[8] +
-                                2 * (in2[7] * in1[9] + in2[9] * in1[7])
-                        )
-                )
+            (
+                in2[8] * in1[8] +
+                    2 * (in2[7] * in1[9] + in2[9] * in1[7])
+            )
+        )
         out[17] = (
-                (
-                        in2[8] * in1[9] +
-                                in2[9] * in1[8]
-                        )
-                )
+            (
+                in2[8] * in1[9] +
+                    in2[9] * in1[8]
+            )
+        )
         out[18] = (2 * in2[9] * in1[9])
     }
 
@@ -228,7 +247,10 @@ object Field25519 {
      * @param output An output array of size [LIMB_CNT]. After the call `|output[i]| < 2^26` will
      *     hold.
      */
-    fun reduce(input: LongArray, output: LongArray) {
+    fun reduce(
+        input: LongArray,
+        output: LongArray,
+    ) {
         val tmp: LongArray
         if (input.size == 19) {
             tmp = input
@@ -333,7 +355,11 @@ object Field25519 {
      * The output is reduced degree (indeed, one need only provide storage for 10 limbs) and
      * `|output[i]| < 2^26`.
      */
-    fun mult(output: LongArray, inLongArray: LongArray, in2: LongArray) {
+    fun mult(
+        output: LongArray,
+        inLongArray: LongArray,
+        in2: LongArray,
+    ) {
         val t = LongArray(19)
         product(t, inLongArray, in2)
         // |t[i]| < 2^26
@@ -348,41 +374,44 @@ object Field25519 {
      *
      * `out[x] <= 14 * the largest product of the input limbs.`
      */
-    private fun squareInner(out: LongArray, in1: LongArray) {
+    private fun squareInner(
+        out: LongArray,
+        in1: LongArray,
+    ) {
         out[0] = (in1[0] * in1[0])
         out[1] = (2 * in1[0] * in1[1])
         out[2] = (2 * (in1[1] * in1[1] + in1[0] * in1[2]))
         out[3] = (2 * (in1[1] * in1[2] + in1[0] * in1[3]))
         out[4] = (
-                in1[2] * in1[2] +
-                        4 * in1[1] * in1[3] +
-                        2 * in1[0] * in1[4]
-                )
+            in1[2] * in1[2] +
+                4 * in1[1] * in1[3] +
+                2 * in1[0] * in1[4]
+        )
         out[5] = (2 * (in1[2] * in1[3] + in1[1] * in1[4] + in1[0] * in1[5]))
         out[6] = (2 * (in1[3] * in1[3] + in1[2] * in1[4] + in1[0] * in1[6] + 2 * in1[1] * in1[5]))
         out[7] = (2 * (in1[3] * in1[4] + in1[2] * in1[5] + in1[1] * in1[6] + in1[0] * in1[7]))
         out[8] = (
-                (
-                        in1[4] * in1[4] +
-                                2 * (in1[2] * in1[6] + in1[0] * in1[8] + 2 * (in1[1] * in1[7] + in1[3] * in1[5]))
-                        )
-                )
+            (
+                in1[4] * in1[4] +
+                    2 * (in1[2] * in1[6] + in1[0] * in1[8] + 2 * (in1[1] * in1[7] + in1[3] * in1[5]))
+            )
+        )
         out[9] = (2 * (in1[4] * in1[5] + in1[3] * in1[6] + in1[2] * in1[7] + in1[1] * in1[8] + in1[0] * in1[9]))
         out[10] = (
-                2 * (
-                        in1[5] * in1[5] +
-                                in1[4] * in1[6] +
-                                in1[2] * in1[8] +
-                                2 * (in1[3] * in1[7] + in1[1] * in1[9])
-                        )
-                )
+            2 * (
+                in1[5] * in1[5] +
+                    in1[4] * in1[6] +
+                    in1[2] * in1[8] +
+                    2 * (in1[3] * in1[7] + in1[1] * in1[9])
+            )
+        )
         out[11] = (2 * (in1[5] * in1[6] + in1[4] * in1[7] + in1[3] * in1[8] + in1[2] * in1[9]))
         out[12] = (
-                (
-                        in1[6] * in1[6] +
-                                2 * (in1[4] * in1[8] + 2 * (in1[5] * in1[7] + in1[3] * in1[9]))
-                        )
-                )
+            (
+                in1[6] * in1[6] +
+                    2 * (in1[4] * in1[8] + 2 * (in1[5] * in1[7] + in1[3] * in1[9]))
+            )
+        )
         out[13] = (2 * (in1[6] * in1[7] + in1[5] * in1[8] + in1[4] * in1[9]))
         out[14] = (2 * (in1[7] * in1[7] + in1[6] * in1[8] + 2 * in1[5] * in1[9]))
         out[15] = (2 * (in1[7] * in1[8] + in1[6] * in1[9]))
@@ -399,7 +428,10 @@ object Field25519 {
      * On exit: The |output| argument is in reduced coefficients form (indeed, one need only provide
      * storage for 10 limbs) and `|out[i]| < 2^26`.
      */
-    fun square(output: LongArray, in1: LongArray) {
+    fun square(
+        output: LongArray,
+        in1: LongArray,
+    ) {
         val t = LongArray(19)
         squareInner(t, in1)
         // |t[i]| < 14*2^54 because the largest product of two limbs will be < 2^(27+27) and SquareInner
@@ -414,11 +446,11 @@ object Field25519 {
         val output = LongArray(LIMB_CNT)
         for (i in 0 until LIMB_CNT) {
             output[i] = (
-                    (input[EXPAND_START[i]].toInt() and 0xff).toLong()
-                            or ((input[EXPAND_START[i] + 1].toInt() and 0xff).toLong() shl 8)
-                            or ((input[EXPAND_START[i] + 2].toInt() and 0xff).toLong() shl 16)
-                            or ((input[EXPAND_START[i] + 3].toInt() and 0xff).toLong() shl 24)
-                    ) shr EXPAND_SHIFT[i] and MASK[i and 1].toLong()
+                (input[EXPAND_START[i]].toInt() and 0xff).toLong()
+                    or ((input[EXPAND_START[i] + 1].toInt() and 0xff).toLong() shl 8)
+                    or ((input[EXPAND_START[i] + 2].toInt() and 0xff).toLong() shl 16)
+                    or ((input[EXPAND_START[i] + 3].toInt() and 0xff).toLong() shl 24)
+            ) shr EXPAND_SHIFT[i] and MASK[i and 1].toLong()
         }
         return output
     }
@@ -517,22 +549,26 @@ object Field25519 {
         }
         val output = ByteArray(FIELD_LEN)
         for (i in 0 until LIMB_CNT) {
-            output[EXPAND_START[i]] = (
+            output[EXPAND_START[i]] =
+                (
                     output[EXPAND_START[i]]
                         .toLong() or (input[i] and 0xffL)
-                    ).toByte()
-            output[EXPAND_START[i] + 1] = (
+                ).toByte()
+            output[EXPAND_START[i] + 1] =
+                (
                     output[EXPAND_START[i] + 1]
                         .toLong() or (input[i] shr 8 and 0xffL)
-                    ).toByte()
-            output[EXPAND_START[i] + 2] = (
+                ).toByte()
+            output[EXPAND_START[i] + 2] =
+                (
                     output[EXPAND_START[i] + 2]
                         .toLong() or (input[i] shr 16 and 0xffL)
-                    ).toByte()
-            output[EXPAND_START[i] + 3] = (
+                ).toByte()
+            output[EXPAND_START[i] + 3] =
+                (
                     output[EXPAND_START[i] + 3]
                         .toLong() or (input[i] shr 24 and 0xffL)
-                    ).toByte()
+                ).toByte()
         }
         return output
     }
@@ -543,7 +579,10 @@ object Field25519 {
      * Shamelessly copied from agl's code which was shamelessly copied from djb's code. Only the
      * comment format and the variable namings are different from those.
      */
-    fun inverse(out: LongArray, z: LongArray) {
+    fun inverse(
+        out: LongArray,
+        z: LongArray,
+    ) {
         val z2 = LongArray(LIMB_CNT)
         val z9 = LongArray(LIMB_CNT)
         val z11 = LongArray(LIMB_CNT)
@@ -651,7 +690,10 @@ object Field25519 {
     /**
      * Returns 0xffffffff iff a == b and zero otherwise.
      */
-    private fun eq(a: Int, b: Int): Int {
+    private fun eq(
+        a: Int,
+        b: Int,
+    ): Int {
         var a = a
         a = (a xor b).inv()
         a = a and (a shl 16)
@@ -665,7 +707,10 @@ object Field25519 {
     /**
      * returns 0xffffffff if a >= b and zero otherwise, where a and b are both non-negative.
      */
-    private fun gte(a: Int, b: Int): Int {
+    private fun gte(
+        a: Int,
+        b: Int,
+    ): Int {
         var a = a
         a -= b
         // a >= 0 iff a >= b.

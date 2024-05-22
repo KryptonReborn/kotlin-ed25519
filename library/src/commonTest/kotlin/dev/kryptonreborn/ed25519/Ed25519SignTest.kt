@@ -25,7 +25,7 @@ class Ed25519SignTest {
           |Signature: ${sig.toHexString()}
           |PrivateKey: ${keyPair.privateKey.toHexString()}
           |PublicKey: ${keyPair.publicKey.toHexString()}
-          """.trimMargin(),
+                    """.trimMargin(),
                 )
             }
         }
@@ -48,7 +48,7 @@ class Ed25519SignTest {
           |Signature: ${sig.toHexString()}
           |PrivateKey: ${keyPair.privateKey.toHexString()}
           |PublicKey: ${keyPair.publicKey.toHexString()}
-          """.trimMargin(),
+                    """.trimMargin(),
                 )
             }
         }
@@ -81,7 +81,7 @@ class Ed25519SignTest {
           |Signature: ${sig.toHexString()}
           |PrivateKey: ${keyPair.privateKey.toHexString()}
           |PublicKey: ${keyPair.publicKey.toHexString()}
-          """.trimMargin(),
+                    """.trimMargin(),
                 )
             }
         }

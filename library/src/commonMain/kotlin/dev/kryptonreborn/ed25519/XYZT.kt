@@ -29,7 +29,10 @@ class XYZT(
         /**
          * ge_p1p1_to_p2.c
          */
-        fun fromPartialXYZT(out: XYZT, `in`: PartialXYZT): XYZT {
+        fun fromPartialXYZT(
+            out: XYZT,
+            `in`: PartialXYZT,
+        ): XYZT {
             Field25519.mult(out.xyz.x, `in`.xyz.x, `in`.t)
             Field25519.mult(out.xyz.y, `in`.xyz.y, `in`.xyz.z)
             Field25519.mult(out.xyz.z, `in`.xyz.z, `in`.t)
@@ -74,14 +77,14 @@ class XYZT(
                 Field25519.sum(check, vxx, u) // vx^2+u
                 check(!isNonZeroVarTime(check)) {
                     "Cannot convert given bytes to extended projective " +
-                            "coordinates. No square root exists for modulo 2^255-19"
+                        "coordinates. No square root exists for modulo 2^255-19"
                 }
                 Field25519.mult(x, x, Ed25519Constants.SQRTM1)
             }
 
             check(isNonZeroVarTime(x) || s[31].toInt() and 0xff shr 7 == 0) {
                 "Cannot convert given bytes to extended projective " +
-                        "coordinates. Computed x is zero and encoded x's least significant bit is not zero"
+                    "coordinates. Computed x is zero and encoded x's least significant bit is not zero"
             }
             if (getLsb(x) == s[31].toInt() and 0xff shr 7) {
                 neg(x, x)

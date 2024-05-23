@@ -26,7 +26,10 @@ internal class Ed25519Verify(
         }
     }
 
-    fun verify(signature: ByteArray, data: ByteArray): Boolean {
+    fun verify(
+        signature: ByteArray,
+        data: ByteArray,
+    ): Boolean {
         if (signature.size != SIGNATURE_LEN) {
             return false
         }

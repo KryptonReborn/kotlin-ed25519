@@ -56,9 +56,10 @@ class Key(
 )
 
 fun loadEddsaTestJson(): WycheproofTestJson {
-    val json = Json {
-        ignoreUnknownKeys = true
-    }
+    val json =
+        Json {
+            ignoreUnknownKeys = true
+        }
 
     return json.decodeFromString(Resource("src/commonTest/resources/wycheproof/eddsa_test.json").readText())
 }

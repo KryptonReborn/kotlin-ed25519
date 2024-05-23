@@ -14,7 +14,6 @@ class CachedXYZT(
     private val z: LongArray = LongArray(Field25519.LIMB_CNT),
     t2d: LongArray = LongArray(Field25519.LIMB_CNT),
 ) : CachedXYT(yPlusX, yMinusX, t2d) {
-
     /**
      * ge_p3_to_cached.c
      */
@@ -25,7 +24,10 @@ class CachedXYZT(
         Field25519.mult(t2d, xyzt.t, Ed25519Constants.D2)
     }
 
-    override fun multByZ(output: LongArray, inLongArray: LongArray) {
+    override fun multByZ(
+        output: LongArray,
+        inLongArray: LongArray,
+    ) {
         Field25519.mult(output, inLongArray, z)
     }
 }

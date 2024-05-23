@@ -32,14 +32,20 @@ open class CachedXYT {
     }
 
     // z is one implicitly, so this just copies {@code in} to {@code output}.
-    open fun multByZ(output: LongArray, inLongArray: LongArray) {
+    open fun multByZ(
+        output: LongArray,
+        inLongArray: LongArray,
+    ) {
         inLongArray.copyInto(output, endIndex = Field25519.LIMB_CNT)
     }
 
     /**
      * If icopy is 1, copies [other] into this point. Time invariant wrt to icopy value.
      */
-    fun copyConditional(other: CachedXYT, icopy: Int) {
+    fun copyConditional(
+        other: CachedXYT,
+        icopy: Int,
+    ) {
         copyConditional(yPlusX, other.yPlusX, icopy)
         copyConditional(yMinusX, other.yMinusX, icopy)
         copyConditional(t2d, other.t2d, icopy)

@@ -26,32 +26,35 @@ object Ed25519 {
     private const val SIGNATURE_LEN = Field25519.FIELD_LEN * 2
 
     // (x = 0, y = 1) point
-    private val CACHED_NEUTRAL = CachedXYT(
-        longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        longArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    )
-    private val NEUTRAL = PartialXYZT(
-        XYZ(
+    private val CACHED_NEUTRAL =
+        CachedXYT(
+            longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             longArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        )
+    private val NEUTRAL =
+        PartialXYZT(
+            XYZ(
+                longArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            ),
             longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-            longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        ),
-        longArrayOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    )
+        )
 
     // The order of the generator as unsigned bytes in little endian order.
     // (2^252 + 0x14def9dea2f79cd65812631a5cf5d3ed, cf. RFC 7748)
-    private val GROUP_ORDER = byteArrayOf(
-        0xed.toByte(), 0xd3.toByte(), 0xf5.toByte(), 0x5c.toByte(),
-        0x1a.toByte(), 0x63.toByte(), 0x12.toByte(), 0x58.toByte(),
-        0xd6.toByte(), 0x9c.toByte(), 0xf7.toByte(), 0xa2.toByte(),
-        0xde.toByte(), 0xf9.toByte(), 0xde.toByte(), 0x14.toByte(),
-        0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
-        0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
-        0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
-        0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x10.toByte(),
-    )
+    private val GROUP_ORDER =
+        byteArrayOf(
+            0xed.toByte(), 0xd3.toByte(), 0xf5.toByte(), 0x5c.toByte(),
+            0x1a.toByte(), 0x63.toByte(), 0x12.toByte(), 0x58.toByte(),
+            0xd6.toByte(), 0x9c.toByte(), 0xf7.toByte(), 0xa2.toByte(),
+            0xde.toByte(), 0xf9.toByte(), 0xde.toByte(), 0x14.toByte(),
+            0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
+            0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
+            0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(),
+            0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x10.toByte(),
+        )
 
     /**
      * Addition defined in Section 3.1 of
@@ -63,7 +66,11 @@ object Ed25519 {
      * @param extended extended projective point input
      * @param cached cached projective point input
      */
-    private fun add(partialXYZT: PartialXYZT, extended: XYZT, cached: CachedXYT?) {
+    private fun add(
+        partialXYZT: PartialXYZT,
+        extended: XYZT,
+        cached: CachedXYT?,
+    ) {
         val t = LongArray(Field25519.LIMB_CNT)
 
         // Y1 + X1
@@ -161,7 +168,10 @@ object Ed25519 {
      * conversion from PartialXYZT to XYZT and also this fixes a typo in calculation of Y3 and T3 in
      * the paper, H should be replaced with A+B.
      */
-    private fun doubleXYZ(partialXYZT: PartialXYZT, p: XYZ) {
+    private fun doubleXYZ(
+        partialXYZT: PartialXYZT,
+        p: XYZ,
+    ) {
         val t0 = LongArray(Field25519.LIMB_CNT)
 
         // XX = X1^2
@@ -211,7 +221,10 @@ object Ed25519 {
      * Please note that this doesn't reuse [Curve25519#eq] method since the below inputs are
      * byte values.
      */
-    private fun eq(a: Int, b: Int): Int {
+    private fun eq(
+        a: Int,
+        b: Int,
+    ): Int {
         var r = (a xor b).inv() and 0xff
         r = r and (r shl 4)
         r = r and (r shl 2)
@@ -232,7 +245,11 @@ object Ed25519 {
      * @param pos in `B[pos][j] = (j+1)*B*256^pos`
      * @param b value in `[-8, 8]` range.
      */
-    private fun select(t: CachedXYT, pos: Int, b: Byte) {
+    private fun select(
+        t: CachedXYT,
+        pos: Int,
+        b: Byte,
+    ) {
         val bnegative = b.toInt() and 0xff shr 7
         val babs = b - (-bnegative and b.toInt() shl 1)
         t.copyConditional(Ed25519Constants.B_TABLE[pos][0], eq(babs, 1))
@@ -380,7 +397,11 @@ object Ed25519 {
      * Note that execution time varies based on the input since this will only be used in verification
      * of signatures.
      */
-    private fun doubleScalarMultVarTime(a: ByteArray, pointA: XYZT, b: ByteArray): XYZ {
+    private fun doubleScalarMultVarTime(
+        a: ByteArray,
+        pointA: XYZT,
+        b: ByteArray,
+    ): XYZ {
         // pointA, 3*pointA, 5*pointA, 7*pointA, 9*pointA, 11*pointA, 13*pointA, 15*pointA
         val pointAArray = arrayOfNulls<CachedXYZT>(8)
         pointAArray[0] = CachedXYZT(pointA)
@@ -424,7 +445,10 @@ object Ed25519 {
     /**
      * Returns 3 bytes of [inByteArray] starting from [idx] in Little-Endian format.
      */
-    private fun load3(inByteArray: ByteArray, idx: Int): Long {
+    private fun load3(
+        inByteArray: ByteArray,
+        idx: Int,
+    ): Long {
         var result: Long
         result = inByteArray[idx].toLong() and 0xffL
         result = result or ((inByteArray[idx + 1].toInt() and 0xff).toLong() shl 8)
@@ -435,7 +459,10 @@ object Ed25519 {
     /**
      * Returns 4 bytes of [inByteArray] starting from [idx] in Little-Endian format.
      */
-    private fun load4(inByteArray: ByteArray, idx: Int): Long {
+    private fun load4(
+        inByteArray: ByteArray,
+        idx: Int,
+    ): Long {
         var result = load3(inByteArray, idx)
         result = result or ((inByteArray[idx + 3].toInt() and 0xff).toLong() shl 24)
         return result
@@ -1249,11 +1276,16 @@ object Ed25519 {
      * @param hashedPrivateKey [Ed25519.getHashedScalar] of the private key
      * @return signature for the [message].
      */
-    fun sign(message: ByteArray, publicKey: ByteArray, hashedPrivateKey: ByteArray): ByteArray {
-        val digest = Buffer().apply {
-            write(hashedPrivateKey, Field25519.FIELD_LEN, Field25519.FIELD_LEN + Field25519.FIELD_LEN)
-            write(message)
-        }
+    fun sign(
+        message: ByteArray,
+        publicKey: ByteArray,
+        hashedPrivateKey: ByteArray,
+    ): ByteArray {
+        val digest =
+            Buffer().apply {
+                write(hashedPrivateKey, Field25519.FIELD_LEN, Field25519.FIELD_LEN + Field25519.FIELD_LEN)
+                write(message)
+            }
         val r = SHA512().digest(digest.readByteArray())
         reduce(r)
 
@@ -1293,13 +1325,20 @@ object Ed25519 {
         return false
     }
 
-    fun sign(message: ByteArray, privateKey: ByteArray): ByteArray {
+    fun sign(
+        message: ByteArray,
+        privateKey: ByteArray,
+    ): ByteArray {
         val hashedPrivateKey = getHashedScalar(privateKey)
         val publicKey = scalarMultWithBaseToBytes(hashedPrivateKey)
         return sign(message, publicKey, hashedPrivateKey)
     }
 
-    fun verify(message: ByteArray, signature: ByteArray, publicKey: ByteArray): Boolean {
+    fun verify(
+        message: ByteArray,
+        signature: ByteArray,
+        publicKey: ByteArray,
+    ): Boolean {
         if (signature.size != SIGNATURE_LEN) {
             return false
         }
@@ -1307,11 +1346,12 @@ object Ed25519 {
         if (!isSmallerThanGroupOrder(s)) {
             return false
         }
-        val digest = Buffer().apply {
-            write(signature, 0, Field25519.FIELD_LEN)
-            write(publicKey)
-            write(message)
-        }
+        val digest =
+            Buffer().apply {
+                write(signature, 0, Field25519.FIELD_LEN)
+                write(publicKey)
+                write(message)
+            }
         val h = SHA512().digest(digest.readByteArray())
         reduce(h)
 

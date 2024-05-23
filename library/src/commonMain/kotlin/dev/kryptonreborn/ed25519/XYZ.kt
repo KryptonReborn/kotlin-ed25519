@@ -89,7 +89,10 @@ class XYZ {
          *
          * @return true if two arrays are equal.
          */
-        fun fixedTimingEqual(x: ByteArray, y: ByteArray): Boolean {
+        fun fixedTimingEqual(
+            x: ByteArray,
+            y: ByteArray,
+        ): Boolean {
             if (x.size != y.size) {
                 return false
             }
@@ -103,7 +106,10 @@ class XYZ {
         /**
          * ge_p1p1_to_p2.c
          */
-        fun fromPartialXYZT(out: XYZ, inXyzt: PartialXYZT): XYZ {
+        fun fromPartialXYZT(
+            out: XYZ,
+            inXyzt: PartialXYZT,
+        ): XYZ {
             Field25519.mult(out.x, inXyzt.xyz.x, inXyzt.t)
             Field25519.mult(out.y, inXyzt.xyz.y, inXyzt.xyz.z)
             Field25519.mult(out.z, inXyzt.xyz.z, inXyzt.t)

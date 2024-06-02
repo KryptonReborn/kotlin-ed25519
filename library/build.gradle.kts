@@ -15,7 +15,7 @@ publishConfig {
     artifactId = "ed25519"
 }
 
-version = "0.0.1"
+version = "0.1.0"
 
 android {
     namespace = "dev.kryptonreborn.ed25519"

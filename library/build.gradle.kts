@@ -45,3 +45,7 @@ rootProject.plugins.withType<YarnPlugin> {
         yarnLockAutoReplace = true
     }
 }
+
+tasks.dokkaHtml {
+    outputDirectory.set(layout.buildDirectory.dir("documentation/html"))
+}
